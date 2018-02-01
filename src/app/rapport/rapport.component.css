@@ -1,0 +1,24 @@
+mat-form-field {
+  width: 100%;
+}
+
+.bg-lightblue {
+  background-color: #e3f2fd
+}
+
+.odd {
+  background: rgb(233, 233, 233);
+}
+.titledark {
+  background: rgb(199, 199, 199);
+}
+
+table th.thcenter, table td.tdcenter {
+  text-align: center;
+}
+table th.thleft, table td.tdleft {
+  text-align: left;
+}
+table th.thright, table td.tdright {
+  text-align: right;
+}

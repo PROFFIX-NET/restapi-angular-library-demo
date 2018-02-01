@@ -1,0 +1,55 @@
+<div class="w-50 mx-auto login">
+  <h1 class="ml-4">Login</h1>
+
+  <form [formGroup]="loginFormGroup">
+
+    <mat-form-field class="w-100">
+      <input matInput type="url" [(ngModel)]="connectionSettings.WebserviceUrl" formControlName="WebserviceUrl" placeholder="Webservice URL">
+      <mat-hint align="start">z.B.: https://meine.pxrestapi.ch:50000</mat-hint>
+    </mat-form-field>
+    <mat-form-field class="w-100">
+      <input matInput type="password" [(ngModel)]="connectionSettings.WebservicePasswortHash" formControlName="WebservicePasswort"
+        placeholder="Webservice Passwort">
+    </mat-form-field>
+    <mat-error>
+      {{ this.errorWebservice }}
+    </mat-error>
+
+    <div *ngIf="!showLogin">
+      <button mat-button type="button" class="bg-secondary w-100" (click)="isWebserviceCorrect()">
+        Weiter
+        <i class="material-icons">arrow_forward</i>
+      </button>
+    </div>
+
+    <div *ngIf="showLogin">
+      <mat-form-field class="w-100">
+        <mat-select [(ngModel)]="login.Datenbank" formControlName="Datenbank" placeholder="Datenbank">
+          <mat-option *ngFor="let datenbank of datenbanken" [value]="datenbank">
+            {{ datenbank.Name }} ({{datenbank.Bezeichnung }})
+          </mat-option>
+        </mat-select>
+      </mat-form-field>
+      <mat-form-field class="w-100">
+        <input matInput type="text" [(ngModel)]="login.Benutzer" formControlName="Benutzer" placeholder="Benutzer">
+      </mat-form-field>
+      <mat-form-field class="w-100">
+        <input matInput type="password" [(ngModel)]="login.Passwort" formControlName="Passwort" placeholder="Passwort">
+      </mat-form-field>
+      <mat-error>
+        {{ this.errorLogin }}
+      </mat-error>
+      <mat-slide-toggle [(ngModel)]="autoLogin" formControlName="AutoLogin" [color]="'primary'" class="mb-3">
+        AutoLogin
+      </mat-slide-toggle>
+
+      <div>
+        <button mat-button type="button" class="bg-secondary w-100 mt-1" (click)="doLogin()">
+          <i class="material-icons">input</i>
+          Login
+        </button>
+      </div>
+    </div>
+
+  </form>
+</div>

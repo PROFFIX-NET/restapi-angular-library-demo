@@ -1,0 +1,44 @@
+<!-- Header -->
+<mat-toolbar class="header-container" color="primary">
+  <div class="col-1"></div>
+  <div class="col-10">
+    <button mat-button [matMenuTriggerFor]="kontextmenu">
+      <i class="material-icons">more_vert</i>
+    </button>
+    <mat-menu #kontextmenu="matMenu">
+      <button mat-menu-item routerLink="/rapport">
+        <i class="material-icons mr-3" style="vertical-align: middle;">list</i>Rapporte
+      </button>
+      <button mat-menu-item routerLink="/profil">
+        <i class="material-icons mr-3" style="vertical-align: middle;">person_outline</i>Mein Profil
+      </button>
+      <button mat-menu-item (click)="this.loginService.doLogout()">
+        <i class="material-icons mr-3" style="vertical-align: middle;">exit_to_app</i>Logout
+      </button>
+    </mat-menu>
+    RESTAPI Angular Library <a (click)="this.clearAllDebug()">Demo</a>
+  </div>
+  <div class="col-1"></div>
+</mat-toolbar>
+<!-- Content -->
+<mat-sidenav-container class="content-container">
+  <mat-sidenav-content>
+    <div class="col-1"></div>
+    <div class="col-10 mx-auto">
+      <mat-card class="card">
+        <mat-card-content>
+          <router-outlet></router-outlet>
+        </mat-card-content>
+      </mat-card>
+    </div>
+    <div class="col-1"></div>
+  </mat-sidenav-content>
+</mat-sidenav-container>
+<!-- Footer -->
+<mat-toolbar class="footer-container" color="primary">
+  <div class="col-1"></div>
+  <div class="col-10">
+    v1.0.0
+  </div>
+  <div class="col-1"></div>
+</mat-toolbar>

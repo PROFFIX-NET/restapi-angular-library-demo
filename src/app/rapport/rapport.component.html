@@ -1,0 +1,146 @@
+<h1>Rapporte</h1>
+<!-- Tabelle -->
+<table class="w-100">
+  <!-- Tabelle nur anzeigen wenn Rapport-Array Inhalt hat -->
+  <tr class="titledark">
+    <th class="thcenter">Nr</th>
+    <th class="thleft">Mitarbeiter</th>
+    <th class="thcenter">AuftragNr</th>
+    <th class="thleft">Auftrag</th>
+    <th class="thleft">Positionsart</th>
+    <th class="thleft">Datum</th>
+    <th class="thleft">Stunden</th>
+    <th class="thright"></th>
+  </tr>
+  <tr *ngFor="let rapport of rapporte; let odd = odd" [class.odd]="odd">
+    <!-- für jeden Rapport im Rapport-Array -->
+    <ng-container *ngIf="rapport != selectedRapport">
+      <!-- wenn der Rapport NICHT im Editiermodus ist-->
+      <td class="tdcenter">{{rapport.RapportNr}}</td>
+      <td class="tdleft">{{rapport.Mitarbeiter.Name}}</td>
+      <td class="tdcenter">{{rapport.Auftrag.AuftragNr}}</td>
+      <td class="tdleft">{{rapport.Auftrag.Bezeichnung}}</td>
+      <td class="tdleft">{{rapport.Positionsart.Bezeichnung}}</td>
+      <td class="tdleft">{{rapport.Datum}}</td>
+      <td class="tdleft">{{rapport.Stunden}}</td>
+      <td class="tdright">
+        <button (click)="toggleRapport(rapport)" mat-raised-button class="bg-lightblue">
+          <mat-icon mat-list-icon>mode_edit</mat-icon>
+        </button>
+      </td>
+    </ng-container>
+    <ng-container *ngIf="rapport == selectedRapport">
+      <!-- wenn der Rapport im Editiermodus ist-->
+      <td class="tdcenter">{{rapport.RapportNr}}</td>
+      <td>
+        <mat-form-field>
+          <input matInput type="text" [(ngModel)]="selectedRapport.Mitarbeiter" [matAutocomplete]="mitarbeiter" placeholder="Mitarbeiter">
+        </mat-form-field>
+        <mat-autocomplete #mitarbeiter="matAutocomplete" [displayWith]="displayMitarbeiter">
+          <mat-option *ngFor="let mitarbeiter of mitarbeiters" [value]="mitarbeiter">
+            {{ mitarbeiter.MitarbeiterNr }} - {{ mitarbeiter.Name }}
+          </mat-option>
+        </mat-autocomplete>
+      </td>
+      <td class="tdcenter">{{rapport.Auftrag.AuftragNr}}</td>
+      <td>
+        <mat-form-field>
+          <input matInput type="text" [(ngModel)]="selectedRapport.Auftrag" [matAutocomplete]="auftrag" placeholder="Auftrag">
+        </mat-form-field>
+        <mat-autocomplete #auftrag="matAutocomplete" [displayWith]="displayAuftrag">
+          <mat-option *ngFor="let auftrag of auftraege" [value]="auftrag">
+            {{ auftrag.AuftragNr }} - {{ auftrag.Bezeichnung }}
+          </mat-option>
+        </mat-autocomplete>
+      </td>
+      <td>
+        <mat-form-field>
+          <input matInput type="text" [(ngModel)]="selectedRapport.Positionsart" [matAutocomplete]="positionsart" placeholder="Positionsart">
+        </mat-form-field>
+        <mat-autocomplete #positionsart="matAutocomplete" [displayWith]="displayPositionsart">
+          <mat-option *ngFor="let positionsart of positionsarten" [value]="positionsart">
+            {{ positionsart.PositionsartNr }} - {{ positionsart.Bezeichnung }}
+          </mat-option>
+        </mat-autocomplete>
+      </td>
+      <td>
+        <mat-form-field *ngIf="selectedRapport.Datum">
+          <input matInput type="text" [(ngModel)]="selectedRapport.Datum" placeholder="Datum">
+        </mat-form-field>
+      </td>
+      <td>
+        <mat-form-field>
+          <input matInput type="number" #stunden [(ngModel)]="selectedRapport.Stunden" placeholder="Stunden">
+          <mat-hint align="end">{{stunden.value}} Stunden</mat-hint>
+        </mat-form-field>
+      </td>
+      <td class="tdright">
+        <button (click)="saveEditedRapport()" mat-raised-button class="bg-lightblue">
+          <mat-icon mat-list-icon>save</mat-icon>
+        </button>
+      </td>
+    </ng-container>
+  </tr>
+  <tr>
+    <td colspan="8" class="pt-2">
+      <button (click)="getRapporteMehr().subscribe()" mat-raised-button class="bg-lightblue w-100" [disabled]="!rapporteMehr">
+        <mat-icon mat-list-icon>autorenew</mat-icon>
+        mehr Rapporte laden
+      </button>
+    </td>
+  </tr>
+  <!-- neuer leerer Rapport-->
+  <tr>
+    <td class="tdcenter">
+      <!-- RapportNr ist fortlaufende Zahl -->
+      <mat-icon mat-list-icon>fiber_new</mat-icon>
+    </td>
+    <td>
+      <mat-form-field>
+        <input matInput type="text" [(ngModel)]="newRapport.Mitarbeiter" [matAutocomplete]="mitarbeiter" placeholder="Mitarbeiter">
+      </mat-form-field>
+      <mat-autocomplete #mitarbeiter="matAutocomplete" [displayWith]="displayMitarbeiter">
+        <mat-option *ngFor="let mitarbeiter of mitarbeiters" [value]="mitarbeiter">
+          {{ mitarbeiter.MitarbeiterNr }} - {{ mitarbeiter.Name }}
+        </mat-option>
+      </mat-autocomplete>
+    </td>
+    <td colspan="2">
+      <mat-form-field>
+        <input matInput type="text" [(ngModel)]="newRapport.Auftrag" [matAutocomplete]="auftrag" placeholder="Auftrag">
+      </mat-form-field>
+      <mat-autocomplete #auftrag="matAutocomplete" [displayWith]="displayAuftrag">
+        <mat-option *ngFor="let auftrag of auftraege" [value]="auftrag">
+          {{ auftrag.AuftragNr }} - {{ auftrag.Bezeichnung }}
+        </mat-option>
+      </mat-autocomplete>
+    </td>
+    <td>
+      <mat-form-field>
+        <input matInput type="text" [(ngModel)]="newRapport.Positionsart" [matAutocomplete]="positionsart" placeholder="Positionsart">
+      </mat-form-field>
+      <mat-autocomplete #positionsart="matAutocomplete" [displayWith]="displayPositionsart">
+        <mat-option *ngFor="let positionsart of positionsarten" [value]="positionsart">
+          {{ positionsart.PositionsartNr }} - {{ positionsart.Bezeichnung }}
+        </mat-option>
+      </mat-autocomplete>
+    </td>
+    <td>
+      <mat-form-field>
+        <input matInput type="text" [value]="dateNewRapport" placeholder="Datum">
+        <mat-hint align="start">im Format yyyy-mm-dd</mat-hint>
+      </mat-form-field>
+    </td>
+    <td>
+      <mat-form-field>
+        <input matInput type="number" #stunden [(ngModel)]="newRapport.Stunden" placeholder="Stunden">
+        <mat-hint align="end">{{stunden.value}} Stunden</mat-hint>
+      </mat-form-field>
+    </td>
+    <td class="tdright">
+      <button (click)="saveNewRapport()" mat-raised-button class="bg-lightblue">
+        <mat-icon mat-list-icon>save</mat-icon>
+      </button>
+    </td>
+  </tr>
+</table>
