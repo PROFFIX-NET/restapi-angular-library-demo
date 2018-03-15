@@ -21,7 +21,7 @@ import { LogService } from 'app/log/log.service';
 @Component({
   selector: 'app-rapport',
   templateUrl: './rapport.component.html',
-  styleUrls: ['./rapport.component.css'],
+  styleUrls: ['./rapport.component.scss'],
 })
 export class RapportComponent implements OnInit {
   rapporte: PxRapport[];
