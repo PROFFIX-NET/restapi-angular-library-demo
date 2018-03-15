@@ -2,7 +2,7 @@
 <!-- Tabelle -->
 <table class="w-100">
   <!-- Tabelle nur anzeigen wenn Rapport-Array Inhalt hat -->
-  <tr class="titledark">
+  <tr class="dark">
     <th class="thcenter">Nr</th>
     <th class="thleft">Mitarbeiter</th>
     <th class="thcenter">AuftragNr</th>
@@ -24,7 +24,7 @@
       <td class="tdleft">{{rapport.Datum}}</td>
       <td class="tdleft">{{rapport.Stunden}}</td>
       <td class="tdright">
-        <button (click)="toggleRapport(rapport)" mat-raised-button class="bg-lightblue">
+        <button (click)="toggleRapport(rapport)" mat-button>
           <mat-icon mat-list-icon>mode_edit</mat-icon>
         </button>
       </td>
@@ -75,7 +75,7 @@
         </mat-form-field>
       </td>
       <td class="tdright">
-        <button (click)="saveEditedRapport()" mat-raised-button class="bg-lightblue">
+        <button (click)="saveEditedRapport()" mat-button>
           <mat-icon mat-list-icon>save</mat-icon>
         </button>
       </td>
@@ -83,7 +83,7 @@
   </tr>
   <tr>
     <td colspan="8" class="pt-2">
-      <button (click)="getRapporteMehr().subscribe()" mat-raised-button class="bg-lightblue w-100" [disabled]="!rapporteMehr">
+      <button (click)="getRapporteMehr().subscribe()" mat-raised-button class="dark w-100" [disabled]="!rapporteMehr">
         <mat-icon mat-list-icon>autorenew</mat-icon>
         mehr Rapporte laden
       </button>
@@ -138,7 +138,7 @@
       </mat-form-field>
     </td>
     <td class="tdright">
-      <button (click)="saveNewRapport()" mat-raised-button class="bg-lightblue">
+      <button (click)="saveNewRapport()" mat-button>
         <mat-icon mat-list-icon>save</mat-icon>
       </button>
     </td>
