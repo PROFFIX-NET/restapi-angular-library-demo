@@ -16,7 +16,8 @@ import { LogService } from 'app/log/log.service';
 
 @Component({
   selector: 'app-login',
-  templateUrl: './login.component.html'
+  templateUrl: './login.component.html',
+  styleUrls: ['./login.component.scss']
 })
 export class LoginComponent implements OnInit {
   errorWebservice: string;
@@ -69,9 +70,9 @@ export class LoginComponent implements OnInit {
       // Die Module können aus der AppConfiguration gelesen werden
       Module: this.configuration.getRequiredLicencedModulesAsStringArray()
     };
-    // reset login status
+    // Login Status zurücksetzen
     this.loginService.doLogout();
-    // get return url von route parameters oder default '/'
+    // get return URL von route parameters oder default '/'
     this.returnUrl = this.route.snapshot.queryParams['returnUrl'] || '/';
   }
 
@@ -102,7 +103,7 @@ export class LoginComponent implements OnInit {
    * Login-Funktion des Benutzers
    */
   doLogin() {
-    const login = { ...this.login }; // login-Object kopieren (Vorlage aus Constructor)
+    const login = { ...this.login }; // login-Object kopieren (Vorlage aus Konstruktor)
     login.Passwort = PxHash.sha256(login.Passwort); // direkt via NgModel gesetztes Passwort nachträglich verhashen
     this.loginService.doLogin(login).subscribe(
       loggedIn => {
@@ -118,6 +119,46 @@ export class LoginComponent implements OnInit {
       error => {
         this.logService.logError("Login fehlgeschlagen: " + error.Message);
         this.errorLogin = this.logService.getError();
+      }
+    );
+  }
+
+  /**
+   * Login auf Online DEMODB ausführen
+   */
+  doLoginDemo() {
+    this.showLogin = true; // alle Felder anzeigen, falls Fehler auftritt
+    const login = { ...this.login }; // login-Object kopieren (Vorlage aus Konstruktor)
+    this.connectionSettingsService.current = {
+      WebserviceUrl: "https://remote.proffix.net:11011/pxapi/v2",
+      WebservicePasswortHash: "16378f3e3bc8051435694595cbd222219d1ca7f9bddf649b9a0c819a77bb5e50"
+    };
+    this.datenbankService.getAll().subscribe(
+      datenbanken => {
+        this.datenbanken = datenbanken;
+        this.datenbanken.forEach(datenbank => {
+          if (datenbank.Name === "DEMODB") {
+            login.Datenbank = datenbank;
+          }
+        });
+        login.Benutzer = "Gast";
+        login.Passwort = "16ec7cb001be0525f9af1a96fd5ea26466b2e75ef3e96e881bcb7149cd7598da";
+        this.loginService.doLogin(login).subscribe(
+          loggedIn => {
+            this.logService.logInfo("Login erfolgreich: " + loggedIn.Benutzer);
+            this.logService.setMitarbeiter(loggedIn.Mitarbeiter);
+            this.loginService.removeAutoLogin();
+            this.router.navigate([this.returnUrl]);
+          },
+          error => {
+            this.logService.logError("Login fehlgeschlagen: " + error.Message);
+            this.errorLogin = this.logService.getError();
+          }
+        );
+      },
+      error => {
+        this.logService.logError(error.Message);
+        this.errorWebservice = this.logService.getError();
       }
     );
   }

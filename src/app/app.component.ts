@@ -5,8 +5,9 @@ import { startWith, map } from "rxjs/operators";
 import { Observable } from 'rxjs/Rx';
 import {
   PxHash,
-  PxLoginService,
+  PxLoginService
 } from '@proffix/restapi-angular-library';
+import { LoginComponent } from './login/login.component';
 
 @Component({
   selector: 'app-root',
@@ -29,22 +30,7 @@ export class AppComponent {
    */
   navigateLogout() {
     this.loginService.doLogout();
-    this.router.navigate([""]);
+    this.router.navigate(["/login"]);
   }
 
-  /**
-   * Navigations-Funktion für Kontextmenü-Funktion "Mein Profil"
-   */
-  navigateProfile() {
-    this.router.navigate(["/profil"]);
-  }
-
-  /**
-   * Debug Hilfe-Funktion um Local-Storage zu löschen
-   * (Klick auf "Demo" in der Titelleiste)
-   *
-   *clearAllDebug() {
-   *  localStorage.clear();
-   *}
-  */
 }
