@@ -1,7 +1,6 @@
 <!-- Header -->
 <mat-toolbar class="header-container" color="primary">
-  <div class="col-1"></div>
-  <div class="col-10">
+  <div class="mx-auto demo-container">
     <button mat-button [matMenuTriggerFor]="kontextmenu">
       <i class="material-icons">more_vert</i>
     </button>
@@ -18,30 +17,25 @@
     </mat-menu>
     RESTAPI Angular Library Demo
   </div>
-  <div class="col-1"></div>
 </mat-toolbar>
 <!-- Content -->
 <mat-sidenav-container class="content-container">
   <mat-sidenav-content>
-    <div class="col-1"></div>
-    <div class="col-10 mx-auto">
+    <div class="mx-auto demo-container">
       <mat-card class="card">
         <mat-card-content>
           <router-outlet></router-outlet>
         </mat-card-content>
       </mat-card>
     </div>
-    <div class="col-1"></div>
   </mat-sidenav-content>
 </mat-sidenav-container>
 <!-- Footer -->
 <mat-toolbar class="footer-container" color="primary">
-  <div class="col-1"></div>
-  <div class="col-10">
+  <div class="mx-auto demo-container">
     <a mat-button href="https://github.com/PROFFIX-NET">
       Auf zur PROFFIX RESTAPI Angular Library
       <i class="material-icons">launch</i>
     </a>
   </div>
-  <div class="col-1"></div>
 </mat-toolbar>
