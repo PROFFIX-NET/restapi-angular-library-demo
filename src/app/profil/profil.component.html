@@ -3,19 +3,19 @@
 
   <mat-tab label="Adresse">
     <mat-list>
-      <h3 mat-subheader>Adress-Nr. {{mitarbeiter.Adresse.AdressNr}}</h3>
+      <h3 mat-subheader>Adress-Nr. {{mitarbeiter?.Adresse?.AdressNr}}</h3>
       <mat-list-item>
         <mat-icon mat-list-icon>person_outline</mat-icon>
-        <h4 mat-line>Name: {{mitarbeiter.Name}}</h4>
-        <p mat-line>Kurzzeichen: {{mitarbeiter.Kurzzeichen}}</p>
+        <h4 mat-line>Name: {{mitarbeiter?.Name}}</h4>
+        <p mat-line>Kurzzeichen: {{mitarbeiter?.Kurzzeichen}}</p>
       </mat-list-item>
       <mat-divider></mat-divider>
       <mat-list-item>
         <mat-icon mat-list-icon>room</mat-icon>
         <h4 mat-line>Adresse</h4>
-        <p mat-line>{{mitarbeiter.Adresse.Strasse}} </p>
-        <p mat-line>{{mitarbeiter.Adresse.PLZ}} {{mitarbeiter.Adresse.Ort}}</p>
-        <p mat-line>{{mitarbeiter.Adresse.Land.Bezeichnung}}</p>
+        <p mat-line>{{mitarbeiter?.Adresse?.Strasse}} </p>
+        <p mat-line>{{mitarbeiter?.Adresse?.PLZ}} {{mitarbeiter.Adresse.Ort}}</p>
+        <p mat-line>{{mitarbeiter?.Adresse?.Land?.Bezeichnung}}</p>
       </mat-list-item>
     </mat-list>
   </mat-tab>
